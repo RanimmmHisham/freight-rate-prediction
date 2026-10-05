@@ -2,7 +2,7 @@
 
 Predict `posted_rate` for 12,000 loads in Nov-Dec 2025 from 48,000 labelled loads dated Jan-Oct 2025, then predict a fixed Lexington to Fort Wayne Dry Van load for every day of December.
 
-Full write-up with figures: [`reports/Freight_Rate_Report.docx`](reports/Freight_Rate_Report.docx) (PDF copy alongside).
+Full write-up with figures: [`reports/Freight_Rate_Report.docx`](reports/Freight_Rate_Report.pdf).
 
 ## Approach in one paragraph
 
