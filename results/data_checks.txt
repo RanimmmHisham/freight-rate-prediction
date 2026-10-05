@@ -1,0 +1,31 @@
+== shape and time ==
+train (48000, 14), 2025-01-01 to 2025-10-31
+validation (12000, 13), 2025-11-01 to 2025-12-31
+duplicate load_id in train: 0
+
+== missing values ==
+train {'weight': 300, 'market_index': 374}
+validation {'weight': 165, 'market_index': 249}
+December chart inputs columns: ['pickup', 'delivery', 'distance', 'equipment', 'weight', 'date', 'predicted_rate']
+
+== weight ==
+train: negative 292, |weight| min 5000 max 47500, share at exactly 47,500 2.51%
+validation: negative 145, |weight| min 5000 max 47500, share at exactly 47,500 2.51%
+
+== labels ==
+rate per mile: median 2.15, 1st pct 1.67, 99th 3.18, max 14.13, min 0.33
+labels flagged as corrupt (> 4 robust sigma from a robust fit): 682 (1.42%); 341 too high, 341 too low
+share flagged by month: {1: 0.0165, 2: 0.0131, 3: 0.0141, 4: 0.0137, 5: 0.0126, 6: 0.0134, 7: 0.0132, 8: 0.0143, 9: 0.0146, 10: 0.0165}
+
+== distance vs coordinates ==
+road/straight-line ratio: median 1.182, 99th pct 1.404, rows above 1.6: 111 (0.23%); corr(distance, haversine) = 0.9995
+
+== validation coverage ==
+cities in validation but not train: ['Allentown', 'Charlotte', 'Chicago', 'Jackson', 'Knoxville', 'Laredo', 'Norfolk', 'San Diego']; loads touching them: 12.1%
+loads on a lane never seen in train: 12.2%
+December lane Lexington -> Fort Wayne in train: 32 loads
+
+== market_index and quote_signal ==
+market_index: std within a day 0.025, std of daily means 0.167, day-to-day autocorrelation 0.93
+corr(rate per mile, market_index) 0.083; corr(rate per mile, quote_signal) 0.049
+quote_signal: std within a day 0.261, std of daily means 0.129

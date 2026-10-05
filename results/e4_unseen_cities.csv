@@ -1,0 +1,3 @@
+model,all_MAE,all_RMSE,all_MAPE,all_MedAPE,all_WAPE,clean_MAE,clean_RMSE,clean_MAPE,clean_MedAPE,clean_WAPE,fit_s,n_trimmed
+coordinates only (final),120.5651,596.8308,0.0529,0.0256,0.0504,71.1674,103.0899,0.0297,0.0251,0.0301,0.84,439.8
+coordinates + city id,130.1359,598.3016,0.0575,0.0296,0.0544,80.8472,115.4986,0.0343,0.0291,0.0341,1.04,439.8

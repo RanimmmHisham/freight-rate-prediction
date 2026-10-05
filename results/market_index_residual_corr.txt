@@ -1,0 +1,1 @@
+out-of-fold daily residual vs market_index: corr 0.705 over 304 days

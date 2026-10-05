@@ -1,0 +1,108 @@
+rows flagged as corrupt labels: 682 (1.42%)
+
+== E1 baselines vs models (temporal CV, mean of 4 folds) ==
+band median (equipment x distance band)                 MAE    134.8  MedAPE 0.0320  | clean MAE    81.2  clean MAPE 0.0371
+robust linear (distance, weight, equipment)             MAE    118.9  MedAPE 0.0258  | clean MAE    65.1  clean MAPE 0.0294
+GBM static features, raw labels                         MAE    108.2  MedAPE 0.0203  | clean MAE    54.3  clean MAPE 0.0230
+GBM static features, absolute-error loss                MAE    105.2  MedAPE 0.0190  | clean MAE    51.3  clean MAPE 0.0215
+GBM static features, corrupt labels trimmed             MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+final: trimmed GBM + month-deviation market adjustment  MAE    101.0  MedAPE 0.0175  | clean MAE    47.0  clean MAPE 0.0199
+
+== E2 market signal (trimmed labels throughout) ==
+no market input                                         MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+joint GBM + absolute market_index                       MAE    129.1  MedAPE 0.0304  | clean MAE    75.5  clean MAPE 0.0317
+joint GBM + month-deviation                             MAE    107.7  MedAPE 0.0198  | clean MAE    53.8  clean MAPE 0.0227
+two-stage, absolute market_index                        MAE    126.4  MedAPE 0.0298  | clean MAE    72.7  clean MAPE 0.0311
+two-stage, month-deviation (final)                      MAE    101.0  MedAPE 0.0175  | clean MAE    47.0  clean MAPE 0.0199
+two-stage, deviation from 31-day centred mean           MAE    100.1  MedAPE 0.0169  | clean MAE    46.1  clean MAPE 0.0195
+two-stage, month-deviation + day of week                MAE    102.8  MedAPE 0.0179  | clean MAE    48.7  clean MAPE 0.0207
+two-stage, month-deviation + quote_signal               MAE    101.5  MedAPE 0.0182  | clean MAE    47.6  clean MAPE 0.0205
+
+== E2b which static inputs earn their place (trimmed GBM, no market input) ==
+all static inputs                                       MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+without weight                                          MAE    123.8  MedAPE 0.0267  | clean MAE    70.1  clean MAPE 0.0296
+without coordinates                                     MAE    116.9  MedAPE 0.0250  | clean MAE    63.1  clean MAPE 0.0285
+without equipment                                       MAE    173.4  MedAPE 0.0479  | clean MAE   120.7  clean MAPE 0.0504
+
+== E3a daily residual of the static model vs market_index, by month (out-of-fold) ==
+ month  mean_market_index  mean_residual  within_month_corr  slope  intercept
+     1              0.927         -0.053              0.984  0.126     -0.170
+     2              0.997         -0.039              0.971  0.137     -0.176
+     3              1.074         -0.003              0.712  0.175     -0.192
+     4              1.209          0.001              0.964  0.164     -0.197
+     5              1.300          0.023              0.950  0.120     -0.132
+     6              1.280          0.048              0.431  0.087     -0.064
+     7              1.200          0.019              0.983  0.144     -0.154
+     8              0.980         -0.011              0.966  0.112     -0.121
+     9              0.893          0.005              0.283  0.050     -0.039
+    10              0.957          0.008              0.886  0.122     -0.109
+
+== E3b random 5-fold vs temporal: the same feature gets opposite verdicts ==
+random 5-fold | static only                             MAE    119.2  MedAPE 0.0252  | clean MAE    69.5  clean MAPE 0.0292
+random 5-fold | static + absolute market_index (joint GBM) MAE    100.0  MedAPE 0.0184  | clean MAE    50.0  clean MAPE 0.0213
+temporal      | static only                             MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+temporal      | static + absolute market_index (joint GBM) MAE    129.1  MedAPE 0.0304  | clean MAE    75.5  clean MAPE 0.0317
+
+== E4 hold out whole cities; score loads that touch them ==
+coordinates only (final)                                MAE    120.6  MedAPE 0.0256  | clean MAE    71.2  clean MAPE 0.0297
+coordinates + city id                                   MAE    130.1  MedAPE 0.0296  | clean MAE    80.8  clean MAPE 0.0343
+
+== E4b same comparison on the temporal folds (cities all seen) ==
+coordinates only                                        MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+coordinates + city id                                   MAE    104.6  MedAPE 0.0187  | clean MAE    50.7  clean MAPE 0.0212
+
+== E5 hyper-parameters ==
+leaves=7 min_leaf=40 lr=0.06 iters=300                  MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+leaves=7 min_leaf=40 lr=0.03 iters=600                  MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+leaves=7 min_leaf=200 lr=0.06 iters=300                 MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+leaves=7 min_leaf=200 lr=0.03 iters=600                 MAE    104.2  MedAPE 0.0186  | clean MAE    50.3  clean MAPE 0.0211
+leaves=15 min_leaf=40 lr=0.06 iters=300                 MAE    104.1  MedAPE 0.0185  | clean MAE    50.1  clean MAPE 0.0210
+leaves=15 min_leaf=40 lr=0.03 iters=600                 MAE    104.1  MedAPE 0.0185  | clean MAE    50.2  clean MAPE 0.0210
+leaves=15 min_leaf=200 lr=0.06 iters=300                MAE    104.0  MedAPE 0.0186  | clean MAE    50.1  clean MAPE 0.0210
+leaves=15 min_leaf=200 lr=0.03 iters=600                MAE    104.1  MedAPE 0.0185  | clean MAE    50.2  clean MAPE 0.0210
+leaves=31 min_leaf=40 lr=0.06 iters=300                 MAE    104.1  MedAPE 0.0185  | clean MAE    50.1  clean MAPE 0.0210
+leaves=31 min_leaf=40 lr=0.03 iters=600                 MAE    104.0  MedAPE 0.0185  | clean MAE    50.1  clean MAPE 0.0210
+leaves=31 min_leaf=200 lr=0.06 iters=300                MAE    104.1  MedAPE 0.0186  | clean MAE    50.2  clean MAPE 0.0211
+leaves=31 min_leaf=200 lr=0.03 iters=600                MAE    104.1  MedAPE 0.0186  | clean MAE    50.2  clean MAPE 0.0211
+spread of clean MAPE across the grid: 0.021 to 0.0211
+
+== E6 multiplicative calibration of the final forecast ==
+        all_MAE  all_RMSE  all_MAPE  all_MedAPE  clean_MAE
+scale                                                     
+0.98   122.2984  633.5876    0.0523      0.0276    68.5758
+0.99   108.5160  629.6658    0.0467      0.0211    54.6082
+1.00   101.0241  626.8809    0.0438      0.0175    47.0257
+1.01   100.7995  625.2477    0.0440      0.0177    46.8199
+1.02   107.6619  624.7750    0.0471      0.0209    53.8076
+1.03   120.4506  625.4651    0.0529      0.0270    66.8098
+1.05   157.8616  630.3117    0.0694      0.0445   104.8207
+
+== E7 error analysis, October fold (train Jan-Sep) ==
+all rows
+        n    MAPE  MedAPE
+all  4853  0.0467  0.0148
+label corrupt vs clean
+            n    MAPE  MedAPE
+corrupt                      
+clean    4773  0.0170  0.0144
+corrupt    80  1.8217  1.3424
+distance band
+                 n    MAPE  MedAPE
+dist_band                         
+(0, 300]       403  0.0700  0.0178
+(300, 600]     994  0.0405  0.0152
+(600, 1000]   1202  0.0467  0.0143
+(1000, 1500]   890  0.0451  0.0154
+(1500, 2500]  1087  0.0520  0.0136
+(2500, 4000]   277  0.0200  0.0132
+equipment
+              n    MAPE  MedAPE
+equipment                      
+Dry Van    2745  0.0443  0.0153
+Flatbed     918  0.0447  0.0139
+Reefer     1190  0.0539  0.0141
+lane seen in training
+              n    MAPE  MedAPE
+lane_seen                      
+False         8  0.0140  0.0105
+True       4845  0.0468  0.0148

@@ -1,0 +1,15 @@
+slice,group,n,MAPE,MedAPE
+all rows,all,4853,0.0467,0.0148
+label corrupt vs clean,clean,4773,0.017,0.0144
+label corrupt vs clean,corrupt,80,1.8217,1.3424
+distance band,"(0, 300]",403,0.07,0.0178
+distance band,"(300, 600]",994,0.0405,0.0152
+distance band,"(600, 1000]",1202,0.0467,0.0143
+distance band,"(1000, 1500]",890,0.0451,0.0154
+distance band,"(1500, 2500]",1087,0.052,0.0136
+distance band,"(2500, 4000]",277,0.02,0.0132
+equipment,Dry Van,2745,0.0443,0.0153
+equipment,Flatbed,918,0.0447,0.0139
+equipment,Reefer,1190,0.0539,0.0141
+lane seen in training,False,8,0.014,0.0105
+lane seen in training,True,4845,0.0468,0.0148

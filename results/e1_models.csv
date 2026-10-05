@@ -1,0 +1,7 @@
+model,all_MAE,all_RMSE,all_MAPE,all_MedAPE,all_WAPE,clean_MAE,clean_RMSE,clean_MAPE,clean_MedAPE,clean_WAPE,fit_s,n_trimmed
+band median (equipment x distance band),134.7505,633.8341,0.0609,0.032,0.0565,81.1734,111.9488,0.0371,0.0314,0.0345,0.0,0.0
+"robust linear (distance, weight, equipment)",118.8905,630.455,0.0533,0.0258,0.0498,65.097,89.2754,0.0294,0.0253,0.0276,0.225,0.0
+"GBM static features, raw labels",108.1842,628.2086,0.0469,0.0203,0.0453,54.326,78.5166,0.023,0.02,0.023,0.375,0.0
+"GBM static features, absolute-error loss",105.2467,627.5435,0.0454,0.019,0.0441,51.3373,74.2845,0.0215,0.0187,0.0218,0.9,0.0
+"GBM static features, corrupt labels trimmed",104.2002,627.6471,0.045,0.0186,0.0437,50.2711,72.7793,0.0211,0.0183,0.0213,0.9,504.75
+final: trimmed GBM + month-deviation market adjustment,101.0241,626.8809,0.0438,0.0175,0.0423,47.0257,67.58,0.0199,0.0171,0.02,3.65,504.75

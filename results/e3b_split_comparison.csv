@@ -1,0 +1,5 @@
+model,all_MAE,all_RMSE,all_MAPE,all_MedAPE,all_WAPE,clean_MAE,clean_RMSE,clean_MAPE,clean_MedAPE,clean_WAPE,fit_s,n_trimmed
+random 5-fold | static only,119.2099,596.3318,0.0529,0.0252,0.0502,69.496,100.8947,0.0292,0.0248,0.0296,0.92,545.8
+random 5-fold | static + absolute market_index (joint GBM),100.0016,591.9306,0.0451,0.0184,0.0421,50.0197,72.8501,0.0213,0.0181,0.0213,0.92,545.8
+temporal      | static only,104.2002,627.6471,0.045,0.0186,0.0437,50.2711,72.7793,0.0211,0.0183,0.0213,0.875,504.75
+temporal      | static + absolute market_index (joint GBM),129.1146,635.8473,0.0549,0.0304,0.0541,75.4991,101.7462,0.0317,0.03,0.032,0.9,504.75
