@@ -23,7 +23,7 @@ def to_dollars(pred_log_rpm: np.ndarray, df: pd.DataFrame) -> np.ndarray:
     return np.exp(pred_log_rpm) * df["distance"].to_numpy()
 
 
-# ---- baseline 0: median rate per mile in (equipment x distance band) --------------
+# baseline 0: median rate per mile in (equipment x distance band)
 class BandMedian:
     def __init__(self, n_bands: int = 12):
         self.n_bands = n_bands
@@ -42,7 +42,7 @@ class BandMedian:
         return self.table.reindex(idx).fillna(self.fallback).to_numpy()
 
 
-# ---- baseline 1: robust linear model in log space ---------------------------------
+# baseline 1: robust linear model in log space
 class RobustLinear:
     def __init__(self, features):
         self.features = features
@@ -63,7 +63,7 @@ class RobustLinear:
         return self.model.predict(self.scaler.transform(self._x(df)))
 
 
-# ---- gradient boosting ------------------------------------------------------------
+# gradient boosting
 class GBM:
     def __init__(self, features, loss="squared_error", trim=False, categorical=None, **params):
         self.features, self.loss, self.trim = features, loss, trim
@@ -149,7 +149,7 @@ def clean_mask(train: pd.DataFrame) -> np.ndarray:
     return np.abs(resid) < TRIM_SIGMAS * sigma
 
 
-# ---- metrics ----------------------------------------------------------------------
+# metrics
 def metrics(y_true, y_pred) -> dict:
     err = y_pred - y_true
     ape = np.abs(err) / y_true
