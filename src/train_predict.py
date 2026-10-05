@@ -19,13 +19,9 @@ raw_val = load(ROOT / "data/validation.csv")
 template = pd.read_csv(ROOT / "data/validation_predictions_template.csv")
 dec = pd.read_csv(ROOT / "data/december_chart_inputs.csv", parse_dates=["date"])
 
-# market_index per date comes from the feature columns of train and validation. The
-# December chart rows carry no market_index, so they take the value observed in
-# validation.csv for the same date (features only, no labels).
 mi = daily_market_index([raw_train, raw_val])
 weight_fill = float(raw_train["weight"].abs().median())
 
-# The chart file has no coordinates; read them from the cities as they appear in the data.
 coords = pd.concat([
     raw_train[["pickup", "pickup_lat", "pickup_lon"]].set_axis(["city", "lat", "lon"], axis=1),
     raw_train[["delivery", "delivery_lat", "delivery_lon"]].set_axis(["city", "lat", "lon"], axis=1),
@@ -44,7 +40,6 @@ model = MarketAdjusted(STATIC, ["mi_dev"]).fit(train)
 print(f"trained on {len(train) - model.n_trimmed:,} rows; {model.n_trimmed} corrupt-looking labels set aside")
 print("market adjustment (log-rate change per +1 sd of deviation):", model.stage2.coef_.round(4))
 
-# Output goes in template order; the scorer insists on exactly load_id,predicted_rate.
 pred = pd.Series(to_dollars(model.predict(val), val), index=val["load_id"])
 out = template[["load_id"]].copy()
 out["predicted_rate"] = out["load_id"].map(pred).round(2)
