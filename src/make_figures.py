@@ -27,7 +27,7 @@ def clean_axes(ax):
     ax.set_axisbelow(True)
 
 
-# ---- Figure 1: how the data was split ------------------------------------------------
+# Figure 1: how the data was split
 fig, ax = plt.subplots(figsize=(7.4, 3.0), dpi=200)
 rows = [(f"Fold {i + 1}", last, test) for i, (last, test) in enumerate(FOLDS)]
 rows.append(("Final fit", 10, None))
@@ -50,7 +50,7 @@ fig.tight_layout()
 fig.savefig(FIG / "split.png")
 plt.close(fig)
 
-# ---- Figure 2: market_index tracks the daily residual, but each month has its own level
+# Figure 2: market_index tracks the daily residual, but each month has its own level
 d = train[~train["corrupt"]].reset_index(drop=True)
 oof = np.zeros(len(d))
 for a, b in KFold(5, shuffle=True, random_state=0).split(d):
