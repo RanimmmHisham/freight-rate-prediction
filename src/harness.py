@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).parent))
-# Several names below are re-exported for the experiment scripts and tests.
 from features import STATIC, TRIM_FEATURES, add_features, daily_market_index, load, prepare  # noqa: F401
 from models import (GBM, BandMedian, GBMWithCityIds, MarketAdjusted, RobustLinear, clean_mask,  # noqa: F401
                     log_rpm, metrics, to_dollars)
@@ -24,8 +23,6 @@ mi = daily_market_index([raw_train, raw_val])
 weight_fill = float(raw_train["weight"].abs().median())
 train = add_features(prepare(raw_train, mi, weight_fill)).reset_index(drop=True)
 
-# Diagnostic only: flags corrupt-looking labels so errors can also be reported on the
-# clean rows. Never used to train inside a fold (models trim on their own training rows).
 train["corrupt"] = ~clean_mask(train)
 
 month = train["date"].dt.month
