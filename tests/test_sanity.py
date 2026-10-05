@@ -51,7 +51,7 @@ def test_model_is_deterministic():
 def test_submission_files_match_the_template():
     pred_path = ROOT / "validation_predictions.csv"
     if not pred_path.exists():
-        return  # produced by src/train_predict.py
+        return
     pred = pd.read_csv(pred_path)
     template = pd.read_csv(ROOT / "data/validation_predictions_template.csv")
     assert list(pred.columns) == ["load_id", "predicted_rate"]
